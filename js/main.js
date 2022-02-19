@@ -14,11 +14,11 @@ function getRandomInt (from, to) {
 
 getRandomInt();
 
-function compareStringLingth (string, maxLingth) {
+function compareStringLength (string, maxLingth) {
   if (string.length > maxLingth) {
     return false;
   }
 
   return true;
 }
-compareStringLingth ();
+compareStringLength ();
