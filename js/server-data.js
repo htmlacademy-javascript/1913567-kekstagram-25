@@ -26,7 +26,7 @@ function generateObject () {
   const currentInteger = arrayIntrger.splice(0,1)[0];
   return {
     id : currentInteger,
-    url : `photos/${currentInteger}`,
+    url : `photos/${currentInteger}.jpg`,
     description : 'Это фото вам понравится больше чем предыдущее',
     likes : getRandomInt(15, 200),
     comments : {
@@ -41,4 +41,4 @@ function generateObject () {
 
 const arrayObject = Array.from({length:arrayIntrger.length}, generateObject);
 
-console.log(generateObject(), arrayObject);
+export {arrayObject};
