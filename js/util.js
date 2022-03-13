@@ -1,4 +1,3 @@
-// Клавиши esc, enter.
 
 function getRandomInt (from, to) {
   from = Math.ceil(from);
@@ -19,6 +18,13 @@ getRandomInt();
 function compareStringLength (string, length) {
   return string.length <= length;
 }
-compareStringLength ('fghhfgfj', 100);
 
-export {getRandomInt, compareStringLength};
+function isEscapeKey (evt) {
+  return evt.key === 'Escape';
+}
+
+function isEnterKey (evt) {
+  return evt.key === 'Enter';
+}
+
+export {getRandomInt, compareStringLength, isEnterKey, isEscapeKey};
