@@ -1,66 +1,70 @@
 import { arrayObject } from './server-data.js';
 import {isEscapeKey} from './util.js';
 
-
 const modalPost = document.querySelector('.big-picture');
-const blockCommentsCount = modalPost.querySelector('.social__comment-count');
-const body = document.querySelector('body');
 
-const pictures = document.querySelectorAll('a.picture');
 const modalComments = modalPost.querySelector('.social__comments');
 const closeModalButton = modalPost.querySelector('.big-picture__cancel');
 
-for (let i = 0; i < pictures.length; i++) {
-  const picture = pictures[i];
+function openModal () {
+  const blockCommentsCount = modalPost.querySelector('.social__comment-count');
+  const pictures = document.querySelectorAll('a.picture');
+  const body = document.querySelector('body');
 
-  picture.addEventListener('click',  (evt) => {
-    evt.preventDefault();
-    modalPost.classList.remove('hidden');
-    blockCommentsCount.classList.add('hidden');
-    body.classList.add('modal-open');
+  for (let i = 0; i < pictures.length; i++) {
+    const picture = pictures[i];
 
-    const modalImage = modalPost.querySelector('.big-picture__img img');
-    modalImage.src= arrayObject[i].url;
+    picture.addEventListener('click',  (evt) => {
+      evt.preventDefault();
+      modalPost.classList.remove('hidden');
+      blockCommentsCount.classList.add('hidden');
+      body.classList.add('modal-open');
 
-    const modalLikes = modalPost.querySelector('.likes-count');
-    modalLikes.textContent = arrayObject[i].likes;
+      const modalImage = modalPost.querySelector('.big-picture__img img');
+      modalImage.src= arrayObject[i].url;
 
-    const modalCommentsCount = modalPost.querySelector('.comments-count');
-    const commentsCount = modalPost.querySelectorAll('.social__comments li');
-    modalCommentsCount.textContent = commentsCount.length;
+      const modalLikes = modalPost.querySelector('.likes-count');
+      modalLikes.textContent = arrayObject[i].likes;
 
-    const descriptionPhoto = modalPost.querySelector('.social__caption');
-    descriptionPhoto.textContent = arrayObject[i].description;
+      const modalCommentsCount = modalPost.querySelector('.comments-count');
+      const commentsCount = modalPost.querySelectorAll('.social__comments li');
+      modalCommentsCount.textContent = commentsCount.length;
 
-    if (!modalPost.classList.contains('hidden')) {
-      document.addEventListener('keydown', onModalPostEscKeydown);
-      closeModalButton.addEventListener('click', closeModal);
-      modalComments.removeChild(modalComments.lastChild);
-    }
-    modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]));
+      const descriptionPhoto = modalPost.querySelector('.social__caption');
+      descriptionPhoto.textContent = arrayObject[i].description;
 
-  });
+      if (!modalPost.classList.contains('hidden')) {
+        document.addEventListener('keydown', closeModal);
+        closeModalButton.addEventListener('click', closeModal);
+      }
 
-}
+      modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]));
 
-function onModalPostEscKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    modalPost.classList.add('hidden');
-    //modalComments.removeChild(modalComments.lastChild);
-    document.removeEventListener('keydown', onModalPostEscKeydown);
+    });
+
   }
 }
 
-function closeModal (evt) {
+openModal();
+
+function closeModal(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    modalPost.classList.add('hidden');
+    modalComments.removeChild(modalComments.lastChild);
+    document.removeEventListener('keydown', closeModal);
+    closeModalButton.removeEventListener('click', closeModal);
+    return;
+  }
   evt.preventDefault();
   modalPost.classList.add('hidden');
-  //modalComments.removeChild(modalComments.lastChild);
+  modalComments.removeChild(modalComments.lastChild);
+  document.removeEventListener('keydown', closeModal);
   closeModalButton.removeEventListener('click', closeModal);
+
 }
 
 function createComment (object) {
-
   const addComment = `
   <li class="social__comment">
     <img class="social__picture" src=${object.comments.avatar} alt=${object.comments.name} width="35" height="35">
