@@ -8,6 +8,8 @@ const body = document.querySelector('body');
 
 const pictures = document.querySelectorAll('a.picture');
 const modalComments = modalPost.querySelector('.social__comments');
+const closeModalButton = modalPost.querySelector('.big-picture__cancel');
+
 for (let i = 0; i < pictures.length; i++) {
   const picture = pictures[i];
 
@@ -30,12 +32,13 @@ for (let i = 0; i < pictures.length; i++) {
     const descriptionPhoto = modalPost.querySelector('.social__caption');
     descriptionPhoto.textContent = arrayObject[i].description;
 
-
-    modalComments.append(createComment(arrayObject[i]));
-
     if (!modalPost.classList.contains('hidden')) {
       document.addEventListener('keydown', onModalPostEscKeydown);
+      closeModalButton.addEventListener('click', closeModal);
+      modalComments.removeChild(modalComments.lastChild);
     }
+    modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]));
+
   });
 
 }
@@ -44,28 +47,26 @@ function onModalPostEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     modalPost.classList.add('hidden');
+    //modalComments.removeChild(modalComments.lastChild);
     document.removeEventListener('keydown', onModalPostEscKeydown);
-    modalComments.removeChild(modalComments.lastChild);
   }
 }
 
-function createComment (object) {
-  const liElement = document.createElement('li');
-  liElement.classList.add('social__comment');
-
-  const imgElement = document.createElement('img');
-  imgElement.classList.add('social__picture');
-  imgElement.src = object.comments.avatar;
-  imgElement.alt = object.comments.name;
-  imgElement.style.width = '35px';
-  imgElement.style.height = '35px';
-  liElement.append(imgElement);
-
-  const pElement = document.createElement('p');
-  pElement.classList.add('social__text');
-  pElement.textContent = object.comments.message;
-  liElement.append(pElement);
-  return liElement;
+function closeModal (evt) {
+  evt.preventDefault();
+  modalPost.classList.add('hidden');
+  //modalComments.removeChild(modalComments.lastChild);
+  closeModalButton.removeEventListener('click', closeModal);
 }
 
+function createComment (object) {
+
+  const addComment = `
+  <li class="social__comment">
+    <img class="social__picture" src=${object.comments.avatar} alt=${object.comments.name} width="35" height="35">
+    <p class="social__text">${object.comments.message}</p>
+  </li>`;
+
+  return addComment;
+}
 
