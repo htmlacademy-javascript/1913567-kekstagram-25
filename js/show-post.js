@@ -10,6 +10,7 @@ function openModal () {
   const blockCommentsCount = modalPost.querySelector('.social__comment-count');
   const pictures = document.querySelectorAll('a.picture');
   const body = document.querySelector('body');
+  modalComments.innerHTML = '';
 
   for (let i = 0; i < pictures.length; i++) {
     const picture = pictures[i];
@@ -37,7 +38,6 @@ function openModal () {
         document.addEventListener('keydown', closeModal);
         closeModalButton.addEventListener('click', closeModal);
       }
-
       modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]));
 
     });
@@ -47,20 +47,22 @@ function openModal () {
 
 openModal();
 
-function closeModal(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    modalPost.classList.add('hidden');
-    modalComments.removeChild(modalComments.lastChild);
-    document.removeEventListener('keydown', closeModal);
-    closeModalButton.removeEventListener('click', closeModal);
-    return;
-  }
+function removeHandler (evt) {
   evt.preventDefault();
   modalPost.classList.add('hidden');
   modalComments.removeChild(modalComments.lastChild);
+  //modalComments.innerHTML = '';
   document.removeEventListener('keydown', closeModal);
   closeModalButton.removeEventListener('click', closeModal);
+}
+
+function closeModal(evt) {
+  if (isEscapeKey(evt)) {
+    removeHandler(evt);
+    return;
+  }
+  evt.preventDefault();
+  removeHandler(evt);
 
 }
 
