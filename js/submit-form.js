@@ -4,6 +4,7 @@ import {isEscapeKey} from './util.js';
 const uploadInput = document.querySelector('#upload-file');
 const imageEditingForm = document.querySelector('.img-upload__overlay');
 const buttonCloseUploadModal = document.querySelector('.img-upload__cancel');
+const textComment = document.querySelector('.text__description');
 
 uploadInput.addEventListener('change', () => {
   imageEditingForm.classList.remove('hidden');
@@ -22,6 +23,8 @@ uploadInput.addEventListener('change', () => {
 
   buttonCloseUploadModal.addEventListener('click', closeUploadModal);
   document.addEventListener('keydown', pressEsc);
+  textComment.addEventListener('focus', onFocus);
+  textComment.addEventListener('blur', onBlur);
 });
 
 function closeUploadModal (evt) {
@@ -31,12 +34,21 @@ function closeUploadModal (evt) {
   imageEditingForm.classList.add('hidden');
   buttonCloseUploadModal.removeEventListener('click', closeUploadModal);
   document.removeEventListener('keydown', pressEsc);
+  textComment.removeEventListener('focus', onFocus);
+  textComment.removeEventListener('blur', onBlur);
+
 }
 
 function pressEsc(evt) {
   if (isEscapeKey(evt)) {
     closeUploadModal(evt);
   }
+}
+function onFocus () {
+  document.removeEventListener('keydown', pressEsc);
+}
+function onBlur() {
+  document.addEventListener('keydown', pressEsc);
 }
 
 const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
@@ -64,7 +76,6 @@ function onChangeInputHashtag () {
   }
 
   return true;
-
 }
 
 Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123', 2, false);
@@ -79,5 +90,3 @@ function valid (evt) {
   pristine.validate();
   console.log(pristine.validate());
 }
-
-
