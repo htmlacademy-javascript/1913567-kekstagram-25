@@ -39,34 +39,39 @@ function pressEsc(evt) {
   }
 }
 
-const regular = /^#[A-Za-zА-Яа-яЁё0-9]{2,20}$/;
+const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
 const form = document.querySelector('#upload-select-image');
 const inputHashtag = form.querySelector('.text__hashtags');
 
 
-const pristine = new Pristine(form);
-
 function onChangeInputHashtag () {
-  inputHashtag.addEventListener('change', () => {
-    const hashtagArray = inputHashtag.value.split(' ');
-    hashtagArray.forEach((element) => {
-      console.log(hashtagArray);
-      let isTrue;
-      console.log('ne validno');
+  const hashtagArray = inputHashtag.value.split(' ');
+  let isTrue = false;
+  const labelHashtag = document.querySelector('.form-group');
+  labelHashtag.style.textTransform = 'none';
+  const booleanArray = [];
+  hashtagArray.forEach((element) => {
+    if (regular.test(element) || element === '' && hashtagArray.length <= 5) {
+      isTrue = true;
+    } else {
       isTrue = false;
-      if (regular.test(element)) {
-        console.log('validno');
-        isTrue = true;
-      }
-      return isTrue;
-    });
+    }
+    booleanArray.push(isTrue);
   });
+  const checkFalse = booleanArray.some((element) => element === false);
+  if (checkFalse) {
+    return false;
+  }
+
+  return true;
+
 }
 
-// function validateHashtag (){
+Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123', 2, false);
+//inputHashtag.addEventListener('input', onChangeInputHashtag);
 
-// }
-pristine.addValidator(inputHashtag, onChangeInputHashtag, 'Что-то не так', 2, false);
+const pristine = new Pristine(form);
+
 form.addEventListener('submit', valid);
 
 function valid (evt) {
@@ -74,20 +79,5 @@ function valid (evt) {
   pristine.validate();
   console.log(pristine.validate());
 }
-
-// classTo: 'form__item', // Элемент, на который будут добавляться классы
-//   errorClass: 'form__item--invalid', // Класс, обозначающий невалидное поле
-//   successClass: 'form__item--valid', // Класс, обозначающий валидное поле
-//   errorTextParent: 'form__item', // Элемент, куда будет выводиться текст с ошибкой
-//   errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
-//   errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
-// const hashtagConfig = {
-//   classTo: 'text__description',
-//   errorClass: 'form__item--invalid',
-//   successClass: 'form__item--valid',
-//   errorTextParent: 'form__item', // Элемент, куда будет выводиться текст с ошибкой
-//   errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
-//   errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
-// };
 
 
