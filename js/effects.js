@@ -1,5 +1,5 @@
 const sliderElement = document.querySelector('.effect-level__slider');
-let sliderValue = document.querySelector('.effect-level__value').value;
+const sliderInput = document.querySelector('.effect-level__value');
 const effectImage = document.querySelector('.img-upload__preview img');
 
 noUiSlider.create(sliderElement, {
@@ -46,7 +46,7 @@ const grayscaleSlider = {
 };
 
 const sepiaSlider = {
-  optinoSlider: {
+  optionSlider: {
     range: {
       min: 0,
       max: 1,
@@ -117,9 +117,9 @@ effectsRadio.forEach((element, index) => {
     if (element.checked) {
       sliderElement.noUiSlider.updateOptions(effectsArray[index].optionSlider);
       sliderElement.noUiSlider.on('update', () => {
-        sliderValue = sliderElement.noUiSlider.get();
+        sliderInput.value = sliderElement.noUiSlider.get();
         effectImage.className = (effectsArray[index].class);
-        effectImage.style.filter =  effectsArray[index].filter(sliderValue);
+        effectImage.style.filter =  effectsArray[index].filter(sliderInput.value);
       });
     }
   });

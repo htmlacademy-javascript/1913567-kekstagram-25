@@ -26,3 +26,5 @@ function minusScale (evt) {
 }
 
 scaleSmallerButton.addEventListener('click', minusScale);
+
+// Убрать обработчики при закрытии окна.
