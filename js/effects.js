@@ -108,21 +108,40 @@ const brightnessSlider = {
     return `brightness(${value})`;
   },
 };
-const effectsArray = [defaultSlider, grayscaleSlider, sepiaSlider, invertSlider, blurSlider, brightnessSlider];
+const effectsArray = {
+  none : defaultSlider,
+  chrome : grayscaleSlider,
+  sepia : sepiaSlider,
+  marvin : invertSlider,
+  phobos: blurSlider,
+  heat : brightnessSlider};
 
 const effectsRadio = document.querySelectorAll('.effects__radio');
 
-effectsRadio.forEach((element, index) => {
-  element.addEventListener('change', () => {
-    if (element.checked) {
-      sliderElement.noUiSlider.updateOptions(effectsArray[index].optionSlider);
-      sliderElement.noUiSlider.on('update', () => {
-        sliderInput.value = sliderElement.noUiSlider.get();
-        effectImage.className = (effectsArray[index].class);
-        effectImage.style.filter =  effectsArray[index].filter(sliderInput.value);
-      });
-    }
-  });
-});
 
-// Убрать обработчики при закрытии окна.
+function onChangeEffect (evt) {
+  evt.preventDefault();
+  if (evt.target.checked) {
+    sliderElement.noUiSlider.updateOptions(effectsArray[evt.target.value].optionSlider);
+    sliderElement.noUiSlider.on('update', () => {
+      sliderInput.value = sliderElement.noUiSlider.get();
+      effectImage.className = (effectsArray[evt.target.value].class);
+      effectImage.style.filter =  effectsArray[evt.target.value].filter(sliderInput.value);
+    });
+  }
+}
+
+
+function addOnChangeEffects () {
+  effectsRadio.forEach((element) => {
+    element.addEventListener('change', onChangeEffect);
+  });
+}
+
+function removeOnChangeEffects () {
+  effectsRadio.forEach((element) => {
+    element.removeEventListener('change', onChangeEffect);
+  });
+}
+
+export {addOnChangeEffects, removeOnChangeEffects};

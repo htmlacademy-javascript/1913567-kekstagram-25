@@ -1,5 +1,7 @@
 import {body} from './show-post.js';
 import {isEscapeKey} from './util.js';
+import {addOnScaleButton, removeOnScaleButton} from './scale-photo.js';
+import {addOnChangeEffects, removeOnChangeEffects} from './effects.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const imageEditingForm = document.querySelector('.img-upload__overlay');
@@ -9,6 +11,8 @@ const textComment = document.querySelector('.text__description');
 uploadInput.addEventListener('change', () => {
   imageEditingForm.classList.remove('hidden');
   body.classList.add('modal-open');
+  addOnScaleButton();
+  addOnChangeEffects();
 
   const loadImage = document.querySelector('.img-upload__preview img');
   loadImage.src = URL.createObjectURL(uploadInput.files[0]);
@@ -36,7 +40,8 @@ function closeUploadModal (evt) {
   document.removeEventListener('keydown', pressEsc);
   textComment.removeEventListener('focus', onFocus);
   textComment.removeEventListener('blur', onBlur);
-
+  removeOnScaleButton();
+  removeOnChangeEffects();
 }
 
 function pressEsc(evt) {

@@ -14,7 +14,6 @@ function plusScale (evt) {
   scaleControl.value = `${scaleValue}%`;
   scaleImage.style.transform = `scale(${scaleValue/100})`;
 }
-scaleBiggerButton.addEventListener('click', plusScale);
 
 function minusScale (evt) {
   evt.preventDefault();
@@ -25,6 +24,15 @@ function minusScale (evt) {
   scaleControl.value = `${scaleValue}%`;
 }
 
-scaleSmallerButton.addEventListener('click', minusScale);
 
-// Убрать обработчики при закрытии окна.
+function addOnScaleButton () {
+  scaleBiggerButton.addEventListener('click', plusScale);
+  scaleSmallerButton.addEventListener('click', minusScale);
+}
+
+function removeOnScaleButton() {
+  scaleBiggerButton.removeEventListener('click', plusScale);
+  scaleSmallerButton.removeEventListener('click', minusScale);
+}
+
+export {addOnScaleButton, removeOnScaleButton};
