@@ -1,7 +1,8 @@
 import {body} from './show-post.js';
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, showAlert} from './util.js';
 import {addOnScaleButton, removeOnScaleButton} from './scale-photo.js';
 import {addOnChangeEffects, removeOnChangeEffects} from './effects.js';
+import { sendData } from './server-data.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const imageEditingForm = document.querySelector('.img-upload__overlay');
@@ -31,8 +32,7 @@ uploadInput.addEventListener('change', () => {
   textComment.addEventListener('blur', onBlur);
 });
 
-function closeUploadModal (evt) {
-  evt.preventDefault();
+function closeUploadModal () {
   body.classList.remove('modal-open');
   uploadInput.value = '';
   imageEditingForm.classList.add('hidden');
@@ -88,10 +88,18 @@ Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШ
 
 const pristine = new Pristine(form);
 
-form.addEventListener('submit', valid);
+function valid (onSuccess) {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      sendData(
+        () => onSuccess(),
+        () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+        new FormData(evt.target)
+      );
 
-function valid (evt) {
-  evt.preventDefault();
-  pristine.validate();
-  console.log(pristine.validate());
+    }
+  });
 }
+valid(closeUploadModal);
