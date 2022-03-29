@@ -1,3 +1,4 @@
+// import {showErrorMessage} from './submit-form.js';
 function getData (onSuccess) {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
@@ -18,11 +19,11 @@ function sendData (onSuccess, onFail, body) {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail();
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail();
     });
 }
 

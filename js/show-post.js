@@ -7,8 +7,6 @@ const modalComments = modalPost.querySelector('.social__comments');
 const closeModalButton = modalPost.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 
-getData(console.log);
-
 function openModal (arrayObject) {
   const blockCommentsCount = modalPost.querySelector('.social__comment-count');
   const pictures = document.querySelectorAll('a.picture');

@@ -2,16 +2,6 @@ const sliderElement = document.querySelector('.effect-level__slider');
 const sliderInput = document.querySelector('.effect-level__value');
 const effectImage = document.querySelector('.img-upload__preview img');
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 80,
-  step: 1,
-  connect: 'lower',
-});
-
 const defaultSlider = {
   optinoSlider: {
     range: {
@@ -108,13 +98,14 @@ const brightnessSlider = {
     return `brightness(${value})`;
   },
 };
-const effectsArray = {
+const effects = {
   none : defaultSlider,
   chrome : grayscaleSlider,
   sepia : sepiaSlider,
   marvin : invertSlider,
   phobos: blurSlider,
-  heat : brightnessSlider};
+  heat : brightnessSlider,
+};
 
 const effectsRadio = document.querySelectorAll('.effects__radio');
 
@@ -122,12 +113,19 @@ const effectsRadio = document.querySelectorAll('.effects__radio');
 function onChangeEffect (evt) {
   evt.preventDefault();
   if (evt.target.checked) {
-    sliderElement.noUiSlider.updateOptions(effectsArray[evt.target.value].optionSlider);
+    if (evt.target.value === 'none') {
+      sliderElement.classList.add('hidden');
+      effectImage.style.filter =  effects[evt.target.value].filter(sliderInput.value);
+      return;
+    }
+    sliderElement.classList.remove('hidden');
+    sliderElement.noUiSlider.updateOptions(effects[evt.target.value].optionSlider);
     sliderElement.noUiSlider.on('update', () => {
       sliderInput.value = sliderElement.noUiSlider.get();
-      effectImage.className = (effectsArray[evt.target.value].class);
-      effectImage.style.filter =  effectsArray[evt.target.value].filter(sliderInput.value);
+      effectImage.className = (effects[evt.target.value].class);
+      effectImage.style.filter =  effects[evt.target.value].filter(sliderInput.value);
     });
+
   }
 }
 
@@ -136,12 +134,25 @@ function addOnChangeEffects () {
   effectsRadio.forEach((element) => {
     element.addEventListener('change', onChangeEffect);
   });
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 80,
+    step: 1,
+    connect: 'lower',
+  });
+  sliderElement.classList.add('hidden');
 }
 
 function removeOnChangeEffects () {
   effectsRadio.forEach((element) => {
     element.removeEventListener('change', onChangeEffect);
   });
+  effectsRadio[0].checked = true;
+  effectImage.style.filter = 'none';
+  sliderElement.noUiSlider.destroy();
 }
 
 export {addOnChangeEffects, removeOnChangeEffects};
