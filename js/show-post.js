@@ -1,4 +1,4 @@
-import { arrayObject } from './server-data.js';
+import {getData} from './server-data.js';
 import {isEscapeKey} from './util.js';
 
 const modalPost = document.querySelector('.big-picture');
@@ -7,10 +7,9 @@ const modalComments = modalPost.querySelector('.social__comments');
 const closeModalButton = modalPost.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 
-function openModal () {
+function openModal (arrayObject) {
   const blockCommentsCount = modalPost.querySelector('.social__comment-count');
   const pictures = document.querySelectorAll('a.picture');
-  modalComments.innerHTML = '';
 
   for (let i = 0; i < pictures.length; i++) {
     const picture = pictures[i];
@@ -20,6 +19,7 @@ function openModal () {
       modalPost.classList.remove('hidden');
       blockCommentsCount.classList.add('hidden');
       body.classList.add('modal-open');
+      modalComments.innerHTML = '';
 
       const modalImage = modalPost.querySelector('.big-picture__img img');
       modalImage.src= arrayObject[i].url;
@@ -37,14 +37,14 @@ function openModal () {
       document.addEventListener('keydown', pressEsc);
       closeModalButton.addEventListener('click', removeHandler);
 
-      modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]));
+      modalComments.insertAdjacentHTML('beforeend', createComment(arrayObject[i]).slice(0,5));
 
     });
 
   }
 }
+getData(openModal);
 
-openModal();
 
 function removeHandler (evt) {
   evt.preventDefault();
@@ -62,13 +62,18 @@ function pressEsc(evt) {
 }
 
 function createComment (object) {
-  const addComment = `
-  <li class="social__comment">
-    <img class="social__picture" src=${object.comments.avatar} alt=${object.comments.name} width="35" height="35">
-    <p class="social__text">${object.comments.message}</p>
-  </li>`;
+  const arrayComments = [];
 
-  return addComment;
+  object.comments.forEach((element) => {
+    const addComment = `
+      <li class="social__comment">
+      <img class="social__picture" src=${element.avatar} alt=${element.name} width="35" height="35">
+      <p class="social__text">${element.message}</p>
+      </li>`;
+    arrayComments.push(addComment);
+
+  });
+  return arrayComments;
 }
 
 export {body};

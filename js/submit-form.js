@@ -2,6 +2,7 @@ import {body} from './show-post.js';
 import {isEscapeKey} from './util.js';
 import {addOnScaleButton, removeOnScaleButton} from './scale-photo.js';
 import {addOnChangeEffects, removeOnChangeEffects} from './effects.js';
+import { sendData } from './server-data.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const imageEditingForm = document.querySelector('.img-upload__overlay');
@@ -31,8 +32,7 @@ uploadInput.addEventListener('change', () => {
   textComment.addEventListener('blur', onBlur);
 });
 
-function closeUploadModal (evt) {
-  evt.preventDefault();
+function closeUploadModal () {
   body.classList.remove('modal-open');
   uploadInput.value = '';
   imageEditingForm.classList.add('hidden');
@@ -42,13 +42,9 @@ function closeUploadModal (evt) {
   textComment.removeEventListener('blur', onBlur);
   removeOnScaleButton();
   removeOnChangeEffects();
+
 }
 
-function pressEsc(evt) {
-  if (isEscapeKey(evt)) {
-    closeUploadModal(evt);
-  }
-}
 function onFocus () {
   document.removeEventListener('keydown', pressEsc);
 }
@@ -84,14 +80,67 @@ function onChangeInputHashtag () {
 }
 
 Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123', 2, false);
-//inputHashtag.addEventListener('input', onChangeInputHashtag);
 
 const pristine = new Pristine(form);
 
-form.addEventListener('submit', valid);
+function valid (onSuccess) {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      sendData(
+        () => onSuccess(),
+        () => showErrorMessage(),
+        new FormData(evt.target)
+      );
+    }
+  });
+}
 
-function valid (evt) {
-  evt.preventDefault();
-  pristine.validate();
-  console.log(pristine.validate());
+valid(showSuccessMessage);
+
+const successTemplate = document.querySelector('#success').content;
+const successSectionMessage = successTemplate.querySelector('.success');
+const succesBlockMessage = successSectionMessage.cloneNode(true);
+const successButton = succesBlockMessage.querySelector('button');
+succesBlockMessage.classList.add('hidden');
+body.append(succesBlockMessage);
+
+function showSuccessMessage () {
+  closeUploadModal();
+  succesBlockMessage.classList.remove('hidden');
+  document.addEventListener('keyup', pressEsc);
+  successButton.addEventListener('click', closeMessage);
+}
+
+const errorTemplate = document.querySelector('#error').content;
+const errorSectionMessage = errorTemplate.querySelector('.error');
+const errorBlockMessage = errorSectionMessage.cloneNode(true);
+const errorButton = errorBlockMessage.querySelector('button');
+errorBlockMessage.classList.add('hidden');
+body.append(errorBlockMessage);
+
+function closeMessage() {
+  succesBlockMessage.classList.add('hidden');
+  errorBlockMessage.classList.add('hidden');
+  document.removeEventListener('keyup', pressEsc);
+  successButton.removeEventListener('click', closeMessage);
+  errorButton.removeEventListener('click', closeMessage);
+}
+
+function showErrorMessage () {
+  closeUploadModal();
+  errorBlockMessage.classList.remove('hidden');
+  succesBlockMessage.classList.add('hidden');
+  errorButton.addEventListener('click', closeMessage);
+  document.addEventListener('keyup', pressEsc);
+}
+
+function pressEsc(evt) {
+  if (isEscapeKey(evt) && !imageEditingForm.classList.contains('hidden')) {
+    closeUploadModal(evt);
+  }
+  if (isEscapeKey(evt) && !successSectionMessage.classList.contains('hidden')) {
+    closeMessage();
+  }
 }
