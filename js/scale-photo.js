@@ -9,10 +9,11 @@ scaleImage.style.transform = `scale(${scaleValue/100})`;
 
 function changeScale (evt) {
   evt.preventDefault();
-  if (evt.target === scaleBiggerButton && scaleValue >= 25 && scaleValue < 100) {
+  const scaleButton = evt.target;
+  if (scaleButton === scaleBiggerButton && scaleValue >= 25 && scaleValue < 100) {
     scaleValue += 25;
   }
-  if (evt.target === scaleSmallerButton && scaleValue > 25 && scaleValue <= 100) {
+  if (scaleButton === scaleSmallerButton && scaleValue > 25 && scaleValue <= 100) {
     scaleValue -= 25;
   }
   scaleImage.style.transform = `scale(${scaleValue/100})`;

@@ -21,5 +21,7 @@ function getFragmentPictures (arrayObject) {
 
   return picturesBlock.append(fragment);
 }
-getData(getFragmentPictures);
 
+
+
+export {getFragmentPictures, picturesBlock};
