@@ -65,19 +65,11 @@ function onChangeInputHashtag () {
   labelHashtag.style.textTransform = 'none';
   const booleanArray = [];
   hashtagArray.forEach((element) => {
-    if (regular.test(element) || element === '' && hashtagArray.length <= 5) {
-      isTrue = true;
-    } else {
-      isTrue = false;
-    }
+    isTrue = regular.test(element) || element === '' && hashtagArray.length <= 5;
     booleanArray.push(isTrue);
   });
-  const checkFalse = booleanArray.some((element) => element === false);
-  if (checkFalse) {
-    return false;
-  }
 
-  return true;
+  return !booleanArray.some((element) => element === false);
 }
 
 Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123', 2, false);
