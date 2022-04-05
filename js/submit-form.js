@@ -6,14 +6,18 @@ import { sendData } from './server-data.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const imageEditingForm = document.querySelector('.img-upload__overlay');
-const buttonCloseUploadModal = document.querySelector('.img-upload__cancel');
+const buttonCloseUploadModal = document.querySelector('#upload-cancel');
 const textComment = document.querySelector('.text__description');
+const form = document.querySelector('#upload-select-image');
+const inputHashtag = form.querySelector('.text__hashtags');
 
 uploadInput.addEventListener('change', () => {
   imageEditingForm.classList.remove('hidden');
   body.classList.add('modal-open');
   addOnScaleButton();
   addOnChangeEffects();
+  textComment.textContent = '';
+  inputHashtag.value = '';
 
   const loadImage = document.querySelector('.img-upload__preview img');
   loadImage.src = URL.createObjectURL(uploadInput.files[0]);
@@ -42,7 +46,6 @@ function closeUploadModal () {
   textComment.removeEventListener('blur', onBlur);
   removeOnScaleButton();
   removeOnChangeEffects();
-
 }
 
 function onFocus () {
@@ -53,8 +56,6 @@ function onBlur() {
 }
 
 const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
-const form = document.querySelector('#upload-select-image');
-const inputHashtag = form.querySelector('.text__hashtags');
 
 
 function onChangeInputHashtag () {
@@ -94,6 +95,7 @@ function valid (onSuccess) {
         new FormData(evt.target)
       );
     }
+
   });
 }
 
@@ -109,6 +111,7 @@ body.append(succesBlockMessage);
 function showSuccessMessage () {
   closeUploadModal();
   succesBlockMessage.classList.remove('hidden');
+  document.addEventListener('click', outsiteClick);
   document.addEventListener('keyup', pressEsc);
   successButton.addEventListener('click', closeMessage);
 }
@@ -126,6 +129,7 @@ function closeMessage() {
   document.removeEventListener('keyup', pressEsc);
   successButton.removeEventListener('click', closeMessage);
   errorButton.removeEventListener('click', closeMessage);
+  document.removeEventListener('click', outsiteClick);
 }
 
 function showErrorMessage () {
@@ -134,6 +138,7 @@ function showErrorMessage () {
   succesBlockMessage.classList.add('hidden');
   errorButton.addEventListener('click', closeMessage);
   document.addEventListener('keyup', pressEsc);
+  document.addEventListener('click', outsiteClick);
 }
 
 function pressEsc(evt) {
@@ -141,6 +146,19 @@ function pressEsc(evt) {
     closeUploadModal(evt);
   }
   if (isEscapeKey(evt) && !successSectionMessage.classList.contains('hidden')) {
+    closeMessage();
+  }
+}
+
+function outsiteClick (evt) {
+  evt.preventDefault();
+  const divSuccess = document.querySelector('.success__inner');
+  const divError = document.querySelector('.error__inner');
+  if (!divSuccess.contains(evt.target)) {
+    closeMessage();
+  }
+
+  if (!divError.contains(evt.target)) {
     closeMessage();
   }
 }

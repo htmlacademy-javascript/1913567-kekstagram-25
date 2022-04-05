@@ -16,7 +16,6 @@ function openModal (arrayObject) {
     picture.addEventListener('click',  (evt) => {
       evt.preventDefault();
       modalPost.classList.remove('hidden');
-      // blockCommentsCount.classList.add('hidden');
       body.classList.add('modal-open');
       modalComments.innerHTML = '';
 
