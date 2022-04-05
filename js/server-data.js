@@ -1,9 +1,9 @@
-// import {showErrorMessage} from './submit-form.js';
 function getData (onSuccess) {
-  fetch('https://25.javascript.pages.academy/kekstagram/data')
+  return fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
     .then((posts) => {
       onSuccess(posts);
+      return posts;
     });
 }
 

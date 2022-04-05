@@ -1,8 +1,6 @@
-import {getData} from './server-data.js';
 import {isEscapeKey} from './util.js';
 
 const modalPost = document.querySelector('.big-picture');
-
 const modalComments = modalPost.querySelector('.social__comments');
 const closeModalButton = modalPost.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
@@ -43,8 +41,6 @@ function openModal (arrayObject) {
 
   }
 }
-getData(openModal);
-
 
 function removeHandler (evt) {
   evt.preventDefault();
@@ -76,4 +72,4 @@ function createComment (object) {
   return arrayComments;
 }
 
-export {body};
+export {body, openModal};

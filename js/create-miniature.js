@@ -1,4 +1,3 @@
-import {getData} from './server-data.js';
 const template = document.querySelector('#picture').content;
 const miniature = template.querySelector('.picture');
 const picturesBlock = document.querySelector('.pictures');
@@ -21,5 +20,6 @@ function getFragmentPictures (arrayObject) {
 
   return picturesBlock.append(fragment);
 }
-getData(getFragmentPictures);
 
+
+export {getFragmentPictures, picturesBlock};
