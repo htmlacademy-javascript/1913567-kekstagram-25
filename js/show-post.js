@@ -68,28 +68,37 @@ function createComment (object) {
   });
 
   const totalComments = object.comments.length;
+  let startSlice = 0;
   let countShowComents = 5;
-  arrayComments.slice(0, countShowComents).forEach((element) => {
-    modalComments.insertAdjacentHTML('beforeend', element);
-  });
+  let commentElement = 5;
 
   const loadMoreButton = modalPost.querySelector('.comments-loader');
   loadMoreButton.classList.remove('hidden');
 
   modalTotalCommentsCount.textContent = totalComments;
 
-  blockCommentsCount.textContent = `${countShowComents} из ${modalTotalCommentsCount.innerHTML} комментариев`;
+  if (countShowComents > totalComments) {
 
+    countShowComents = totalComments;
+    commentElement = totalComments;
+    loadMoreButton.classList.add('hidden');
+  }
+  arrayComments.slice(startSlice, countShowComents).forEach((element) => {
+    modalComments.insertAdjacentHTML('beforeend', element);
+  });
+
+  blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
   loadMoreButton.addEventListener('click', () => {
-    modalComments.innerHTML = '';
-    countShowComents += 5;
-    arrayComments.slice(0, countShowComents).forEach((element) => {
+    startSlice += 5;
+    commentElement += 5;
+    arrayComments.slice(startSlice, commentElement).forEach((element) => {
       modalComments.insertAdjacentHTML('beforeend', element);
     });
 
-    blockCommentsCount.textContent = `${countShowComents} из ${modalTotalCommentsCount.innerHTML} комментариев`;
-    if (countShowComents > totalComments) {
-      countShowComents = 5;
+    blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
+
+    if (commentElement > totalComments) {
+      commentElement = 5;
       loadMoreButton.classList.add('hidden');
       blockCommentsCount.textContent = `${totalComments} из ${modalTotalCommentsCount.innerHTML} комментариев`;
     }
