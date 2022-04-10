@@ -18,18 +18,9 @@ function filters (posts) {
     TIMEOUT_DELAY
   ));
 
-  const randomArray = [];
-  posts.some((post) => {
-    if (getRandomInt(0, 1)) {
-      randomArray.push(post);
-    }
-    if (randomArray.length === 10) {
-      return true;
-    }
-  });
 
   onRandomButton(debounce(
-    () => getFragmentPictures(randomArray),
+    () => getFragmentPictures(getRandomArray(posts)),
     TIMEOUT_DELAY
   ));
 
@@ -80,6 +71,19 @@ function onDiscusedButton (cb) {
   });
 }
 
+function getRandomArray (posts) {
+  const randomArray = [];
+  posts.some((post) => {
+    if (getRandomInt(0, 1)) {
+      randomArray.push(post);
+    }
+    if (randomArray.length === 10) {
+      return true;
+    }
+  });
+  return randomArray;
+}
+
 function compareCountComments (commentA, commentB) {
   const countCommentA = commentA.comments.length;
   const countCommentB = commentB.comments.length;
@@ -88,4 +92,4 @@ function compareCountComments (commentA, commentB) {
 }
 
 
-export {filters};
+export {filters, getRandomArray};

@@ -1,3 +1,4 @@
+import {openModal} from './show-post.js';
 const template = document.querySelector('#picture').content;
 const miniature = template.querySelector('.picture');
 const picturesBlock = document.querySelector('.pictures');
@@ -14,11 +15,12 @@ function getFragmentPictures (arrayObject) {
     photo.src = url;
     pictureLikes.textContent = likes;
     pictureComments.textContent = comments.length;
+
     fragment.append(addMiniature);
 
   });
-
-  return picturesBlock.append(fragment);
+  picturesBlock.append(fragment);
+  openModal(arrayObject);
 }
 
 
