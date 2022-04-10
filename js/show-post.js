@@ -77,17 +77,25 @@ function createComment (object) {
 
   modalTotalCommentsCount.textContent = totalComments;
 
-  if (countShowComents > totalComments) {
+  if (countShowComents >= totalComments) {
 
     countShowComents = totalComments;
     commentElement = totalComments;
     loadMoreButton.classList.add('hidden');
+    arrayComments.slice(startSlice, countShowComents).forEach((element) => {
+      modalComments.insertAdjacentHTML('beforeend', element);
+    });
+
+    blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
+    return;
   }
+
   arrayComments.slice(startSlice, countShowComents).forEach((element) => {
     modalComments.insertAdjacentHTML('beforeend', element);
   });
 
   blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
+
   loadMoreButton.addEventListener('click', () => {
     startSlice += 5;
     commentElement += 5;
@@ -100,6 +108,7 @@ function createComment (object) {
     if (commentElement >= totalComments) {
       commentElement = 5;
       loadMoreButton.classList.add('hidden');
+
       blockCommentsCount.textContent = `${totalComments} из ${modalTotalCommentsCount.innerHTML} комментариев`;
     }
 
