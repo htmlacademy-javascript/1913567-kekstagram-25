@@ -97,7 +97,7 @@ function createComment (object) {
 
     blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
 
-    if (commentElement > totalComments) {
+    if (commentElement >= totalComments) {
       commentElement = 5;
       loadMoreButton.classList.add('hidden');
       blockCommentsCount.textContent = `${totalComments} из ${modalTotalCommentsCount.innerHTML} комментариев`;
