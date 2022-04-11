@@ -77,7 +77,10 @@ function getRandomArray (posts) {
     if (getRandomInt(0, 1)) {
       randomArray.push(post);
     }
-    if (randomArray.length === 10) {
+
+    const randomArrayLength = randomArray.length;
+
+    if (randomArrayLength === 10) {
       return true;
     }
   });

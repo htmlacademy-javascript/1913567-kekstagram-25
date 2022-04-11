@@ -1,9 +1,13 @@
+import {showAlert} from './util.js';
 function getData (onSuccess) {
   return fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
     .then((posts) => {
       onSuccess(posts);
       return posts;
+    })
+    .catch(() => {
+      showAlert('Ошибка загрузки данных');
     });
 }
 

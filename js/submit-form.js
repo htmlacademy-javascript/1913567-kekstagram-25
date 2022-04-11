@@ -34,6 +34,8 @@ uploadInput.addEventListener('change', () => {
   document.addEventListener('keydown', pressEsc);
   textComment.addEventListener('focus', onFocus);
   textComment.addEventListener('blur', onBlur);
+  inputHashtag.addEventListener('focus', onFocus);
+  inputHashtag.addEventListener('blur', onBlur);
 });
 
 function closeUploadModal () {
@@ -44,6 +46,8 @@ function closeUploadModal () {
   document.removeEventListener('keydown', pressEsc);
   textComment.removeEventListener('focus', onFocus);
   textComment.removeEventListener('blur', onBlur);
+  inputHashtag.removeEventListener('focus', onFocus);
+  inputHashtag.removeEventListener('blur', onBlur);
   removeOnScaleButton();
   removeOnChangeEffects();
 }
@@ -64,15 +68,25 @@ function onChangeInputHashtag () {
   const labelHashtag = document.querySelector('.form-group');
   labelHashtag.style.textTransform = 'none';
   const booleanArray = [];
+  const repeatElements = [];
+
+  for (let i=0; i < hashtagArray.length; i++) {
+    for(let j=1+i; j < hashtagArray.length; j++) {
+      if (hashtagArray[i] === hashtagArray[j]) {
+        repeatElements.push(hashtagArray[i]);
+      }
+
+    }
+  }
+
   hashtagArray.forEach((element) => {
-    isTrue = regular.test(element) || element === '' && hashtagArray.length <= 5;
+    isTrue = regular.test(element) && element !== '' && hashtagArray.length <= 5 && repeatElements.length === 0;
     booleanArray.push(isTrue);
   });
-
   return !booleanArray.some((element) => element === false);
 }
 
-Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123', 2, false);
+Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123; Не больше 5 различных хештегов', 2, false);
 
 const pristine = new Pristine(form);
 
