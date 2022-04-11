@@ -108,16 +108,19 @@ const effects = {
 };
 
 const effectsRadio = document.querySelectorAll('.effects__radio');
-
+const effectInput = document.querySelector('.img-upload__effect-level');
+effectInput.classList.add('hidden');
 
 function onChangeEffect (evt) {
   evt.preventDefault();
   if (evt.target.checked) {
     if (evt.target.value === 'none') {
+      effectInput.classList.add('hidden');
       sliderElement.classList.add('hidden');
       effectImage.style.filter =  effects[evt.target.value].filter(sliderInput.value);
       return;
     }
+    effectInput.classList.remove('hidden');
     sliderElement.classList.remove('hidden');
     sliderElement.noUiSlider.updateOptions(effects[evt.target.value].optionSlider);
     sliderElement.noUiSlider.on('update', () => {

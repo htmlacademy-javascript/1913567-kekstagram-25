@@ -28,7 +28,7 @@ function openModal (arrayObject) {
       const descriptionPhoto = modalPost.querySelector('.social__caption');
       descriptionPhoto.textContent = arrayObject[i].description;
 
-      document.addEventListener('keydown', pressEsc);
+      document.addEventListener('keydown', onDocumentEscKeydown);
       closeModalButton.addEventListener('click', removeHandler);
 
 
@@ -44,11 +44,11 @@ function removeHandler (evt) {
   modalPost.classList.add('hidden');
   body.classList.remove('modal-open');
   modalComments.removeChild(modalComments.lastChild);
-  document.removeEventListener('keydown', pressEsc);
+  document.removeEventListener('keydown', onDocumentEscKeydown);
   closeModalButton.removeEventListener('click', removeHandler);
 }
 
-function pressEsc(evt) {
+function onDocumentEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     removeHandler(evt);
   }
@@ -76,7 +76,7 @@ function createComment (object) {
   loadMoreButton.classList.remove('hidden');
 
   modalTotalCommentsCount.textContent = totalComments;
-
+  console.log(commentElement);
   if (countShowComents >= totalComments) {
 
     countShowComents = totalComments;
@@ -87,6 +87,7 @@ function createComment (object) {
     });
 
     blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
+    commentElement = 5;
     return;
   }
 
@@ -102,7 +103,7 @@ function createComment (object) {
     arrayComments.slice(startSlice, commentElement).forEach((element) => {
       modalComments.insertAdjacentHTML('beforeend', element);
     });
-
+console.log(commentElement);
     blockCommentsCount.textContent = `${commentElement} из ${modalTotalCommentsCount.innerHTML} комментариев`;
 
     if (commentElement >= totalComments) {
