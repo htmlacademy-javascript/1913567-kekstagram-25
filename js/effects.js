@@ -13,7 +13,7 @@ const defaultSlider = {
     connect: 'lower',
   },
   class: ' ',
-  filter:  function (value) {
+  filter: (value) => {
     value = 'none';
     return `${value}`;
   },
@@ -30,9 +30,7 @@ const grayscaleSlider = {
     connect: 'lower',
   },
   class: 'effects__preview--chrome',
-  filter: function (value) {
-    return `grayscale(${value})`;
-  },
+  filter: (value) => `grayscale(${value})`,
 };
 
 const sepiaSlider = {
