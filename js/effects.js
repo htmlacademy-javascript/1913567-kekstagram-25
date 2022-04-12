@@ -44,9 +44,7 @@ const sepiaSlider = {
     connect: 'lower',
   },
   class: 'effects__preview--sepia',
-  filter: function (value) {
-    return `sepia(${value})`;
-  },
+  filter: (value) => `sepia(${value})`,
 };
 
 const invertSlider = {
@@ -60,9 +58,7 @@ const invertSlider = {
     connect: 'lower',
   },
   class: 'effects__preview--marvin',
-  filter:  function (value) {
-    return `invert(${value}%)`;
-  },
+  filter:  (value) => `invert(${value}%)`,
 };
 
 const blurSlider = {
@@ -76,9 +72,7 @@ const blurSlider = {
     connect: 'lower',
   },
   class: 'effects__preview--phobos',
-  filter:  function (value) {
-    return `blur(${value}px)`;
-  },
+  filter:  (value) => `blur(${value}px)`,
 };
 
 const brightnessSlider = {
@@ -92,9 +86,7 @@ const brightnessSlider = {
     connect: 'lower',
   },
   class: 'effects__preview--heat',
-  filter:  function (value) {
-    return `brightness(${value})`;
-  },
+  filter:  (value) => `brightness(${value})`,
 };
 const effects = {
   none : defaultSlider,

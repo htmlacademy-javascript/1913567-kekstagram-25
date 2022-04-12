@@ -21,9 +21,7 @@ uploadInput.addEventListener('change', () => {
 
   const loadImage = document.querySelector('.img-upload__preview img');
   loadImage.src = URL.createObjectURL(uploadInput.files[0]);
-  loadImage.onload = function () {
-    URL.revokeObjectURL(loadImage.src);
-  };
+  loadImage.onload =  () => URL.revokeObjectURL(loadImage.src);
 
   const imagesEffectsPreview = document.querySelectorAll('.effects__item span');
   imagesEffectsPreview.forEach((element) => {
@@ -80,7 +78,7 @@ function onChangeInputHashtag () {
   }
 
   hashtagArray.forEach((element) => {
-    isTrue = regular.test(element) && element !== '' && hashtagArray.length <= 5 && repeatElements.length === 0;
+    isTrue = regular.test(element) && hashtagArray.length <= 5 && repeatElements.length === 0 || element === '';
     booleanArray.push(isTrue);
   });
   return !booleanArray.some((element) => element === false);
