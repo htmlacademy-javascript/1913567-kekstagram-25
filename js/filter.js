@@ -3,6 +3,7 @@ import {getRandomInt} from './util.js';
 import { debounce } from './util.js';
 
 const TIMEOUT_DELAY = 500;
+const COUNT_SHOW_PHOTO = 10;
 
 const filtersButton = document.querySelectorAll('.img-filters button');
 const defaultFilterButton = document.querySelector('#filter-default');
@@ -78,9 +79,7 @@ function getRandomArray (posts) {
       randomArray.push(post);
     }
 
-    const randomArrayLength = randomArray.length;
-
-    if (randomArrayLength === 10) {
+    if (randomArray.length === COUNT_SHOW_PHOTO) {
       return true;
     }
   });

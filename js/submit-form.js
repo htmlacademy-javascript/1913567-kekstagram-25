@@ -21,42 +21,40 @@ uploadInput.addEventListener('change', () => {
 
   const loadImage = document.querySelector('.img-upload__preview img');
   loadImage.src = URL.createObjectURL(uploadInput.files[0]);
-  loadImage.onload = function () {
-    URL.revokeObjectURL(loadImage.src);
-  };
+  loadImage.onload =  () => URL.revokeObjectURL(loadImage.src);
 
   const imagesEffectsPreview = document.querySelectorAll('.effects__item span');
   imagesEffectsPreview.forEach((element) => {
     element.style.backgroundImage = '123';
   });
 
-  buttonCloseUploadModal.addEventListener('click', closeUploadModal);
-  document.addEventListener('keydown', pressEsc);
-  textComment.addEventListener('focus', onFocus);
-  textComment.addEventListener('blur', onBlur);
-  inputHashtag.addEventListener('focus', onFocus);
-  inputHashtag.addEventListener('blur', onBlur);
+  buttonCloseUploadModal.addEventListener('click', onUploadModalclick);
+  document.addEventListener('keydown', onEscPress);
+  textComment.addEventListener('focus', onInputFocus);
+  textComment.addEventListener('blur', onInputBlur);
+  inputHashtag.addEventListener('focus', onInputFocus);
+  inputHashtag.addEventListener('blur', onInputBlur);
 });
 
-function closeUploadModal () {
+function onUploadModalclick () {
   body.classList.remove('modal-open');
   uploadInput.value = '';
   imageEditingForm.classList.add('hidden');
-  buttonCloseUploadModal.removeEventListener('click', closeUploadModal);
-  document.removeEventListener('keydown', pressEsc);
-  textComment.removeEventListener('focus', onFocus);
-  textComment.removeEventListener('blur', onBlur);
-  inputHashtag.removeEventListener('focus', onFocus);
-  inputHashtag.removeEventListener('blur', onBlur);
+  buttonCloseUploadModal.removeEventListener('click', onUploadModalclick);
+  document.removeEventListener('keydown', onEscPress);
+  textComment.removeEventListener('focus', onInputFocus);
+  textComment.removeEventListener('blur', onInputBlur);
+  inputHashtag.removeEventListener('focus', onInputFocus);
+  inputHashtag.removeEventListener('blur', onInputBlur);
   removeOnScaleButton();
   removeOnChangeEffects();
 }
 
-function onFocus () {
-  document.removeEventListener('keydown', pressEsc);
+function onInputFocus () {
+  document.removeEventListener('keydown', onEscPress);
 }
-function onBlur() {
-  document.addEventListener('keydown', pressEsc);
+function onInputBlur() {
+  document.addEventListener('keydown', onEscPress);
 }
 
 const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
@@ -80,7 +78,7 @@ function onChangeInputHashtag () {
   }
 
   hashtagArray.forEach((element) => {
-    isTrue = regular.test(element) && element !== '' && hashtagArray.length <= 5 && repeatElements.length === 0;
+    isTrue = regular.test(element) && hashtagArray.length <= 5 && repeatElements.length === 0 || element === '';
     booleanArray.push(isTrue);
   });
   return !booleanArray.some((element) => element === false);
@@ -115,11 +113,11 @@ succesBlockMessage.classList.add('hidden');
 body.append(succesBlockMessage);
 
 function showSuccessMessage () {
-  closeUploadModal();
+  onUploadModalclick();
   succesBlockMessage.classList.remove('hidden');
-  document.addEventListener('click', outsiteClick);
-  document.addEventListener('keyup', pressEsc);
-  successButton.addEventListener('click', closeMessage);
+  document.addEventListener('click', onOutsiteClick);
+  document.addEventListener('keyup', onEscPress);
+  successButton.addEventListener('click', onCloseMessageClick);
 }
 
 const errorTemplate = document.querySelector('#error').content;
@@ -129,42 +127,42 @@ const errorButton = errorBlockMessage.querySelector('button');
 errorBlockMessage.classList.add('hidden');
 body.append(errorBlockMessage);
 
-function closeMessage() {
+function onCloseMessageClick() {
   succesBlockMessage.classList.add('hidden');
   errorBlockMessage.classList.add('hidden');
-  document.removeEventListener('keyup', pressEsc);
-  successButton.removeEventListener('click', closeMessage);
-  errorButton.removeEventListener('click', closeMessage);
-  document.removeEventListener('click', outsiteClick);
+  document.removeEventListener('keyup', onEscPress);
+  successButton.removeEventListener('click', onCloseMessageClick);
+  errorButton.removeEventListener('click', onCloseMessageClick);
+  document.removeEventListener('click', onOutsiteClick);
 }
 
 function showErrorMessage () {
-  closeUploadModal();
+  onUploadModalclick();
   errorBlockMessage.classList.remove('hidden');
   succesBlockMessage.classList.add('hidden');
-  errorButton.addEventListener('click', closeMessage);
-  document.addEventListener('keyup', pressEsc);
-  document.addEventListener('click', outsiteClick);
+  errorButton.addEventListener('click', onCloseMessageClick);
+  document.addEventListener('keyup', onEscPress);
+  document.addEventListener('click', onOutsiteClick);
 }
 
-function pressEsc(evt) {
+function onEscPress(evt) {
   if (isEscapeKey(evt) && !imageEditingForm.classList.contains('hidden')) {
-    closeUploadModal(evt);
+    onUploadModalclick(evt);
   }
   if (isEscapeKey(evt) && !successSectionMessage.classList.contains('hidden')) {
-    closeMessage();
+    onCloseMessageClick();
   }
 }
 
-function outsiteClick (evt) {
+function onOutsiteClick (evt) {
   evt.preventDefault();
   const divSuccess = document.querySelector('.success__inner');
   const divError = document.querySelector('.error__inner');
   if (!divSuccess.contains(evt.target)) {
-    closeMessage();
+    onCloseMessageClick();
   }
 
   if (!divError.contains(evt.target)) {
-    closeMessage();
+    onCloseMessageClick();
   }
 }
