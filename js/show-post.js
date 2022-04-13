@@ -60,8 +60,6 @@ function onDocumentEscKeydown (evt) {
   }
 }
 
-// const arrayComments = [];
-
 function getFirstComments (offers) {
   offers.forEach((element) => {
     const templateComment = `
@@ -73,7 +71,7 @@ function getFirstComments (offers) {
   });
 }
 
-function toggleLoadMoreButton (isButton) {
+function hideLoadMoreButton (isButton) {
   if (isButton) {
     loadMoreButton.classList.remove('hidden');
   } else {
@@ -96,9 +94,9 @@ function createComment (object) {
   if (totalComments <= 5) {
     getFirstComments(object.comments);
     showCountComments(totalComments, totalComments);
-    toggleLoadMoreButton(false);
+    hideLoadMoreButton(false);
   } else {
-    toggleLoadMoreButton(true);
+    hideLoadMoreButton(true);
     const comments = object.comments.slice(startSlice, commentElement);
     getFirstComments(comments);
     startSlice += 5;
@@ -118,7 +116,7 @@ function onLoadMoreButtonClick () {
   if (totalComments - startSlice <= 5) {
     commentElement = totalComments;
     startSlice = totalComments;
-    toggleLoadMoreButton(false);
+    hideLoadMoreButton(false);
   } else {
     startSlice += 5;
     commentElement += 5;
