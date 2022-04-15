@@ -10,7 +10,7 @@ const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
 const discusedFilterButton = document.querySelector('#filter-discussed');
 
-function filters (posts) {
+const filters = (posts) => {
   const blockFilters = document.querySelector('.img-filters');
   blockFilters.classList.remove('img-filters--inactive');
 
@@ -35,7 +35,7 @@ function filters (posts) {
 
 }
 
-function clickButton (evt) {
+const clickButton = (evt) => {
   evt.preventDefault();
   filtersButton.forEach((element) => {
     element.classList.remove('img-filters__button--active');
@@ -49,14 +49,14 @@ function clickButton (evt) {
   });
 }
 
-function onDefaultButton (cb) {
+const onDefaultButton = (cb) => {
   defaultFilterButton.addEventListener('click', (evt) => {
     clickButton(evt);
     cb();
   });
 }
 
-function onRandomButton (cb) {
+const onRandomButton = (cb) => {
 
   randomFilterButton.addEventListener('click', (evt) => {
     clickButton(evt);
@@ -65,14 +65,14 @@ function onRandomButton (cb) {
   });
 }
 
-function onDiscusedButton (cb) {
+const onDiscusedButton = (cb) => {
   discusedFilterButton.addEventListener('click', (evt) => {
     clickButton(evt);
     cb();
   });
 }
 
-function getRandomArray (posts) {
+const getRandomArray = (posts) => {
   const randomArray = [];
   posts.some((post) => {
     if (getRandomInt(0, 1)) {
@@ -86,7 +86,7 @@ function getRandomArray (posts) {
   return randomArray;
 }
 
-function compareCountComments (commentA, commentB) {
+const compareCountComments = (commentA, commentB) => {
   const countCommentA = commentA.comments.length;
   const countCommentB = commentB.comments.length;
 

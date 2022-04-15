@@ -101,7 +101,7 @@ const effectsRadio = document.querySelectorAll('.effects__radio');
 const effectInput = document.querySelector('.img-upload__effect-level');
 effectInput.classList.add('hidden');
 
-function onChangeEffect (evt) {
+const onChangeEffect = (evt) => {
   evt.preventDefault();
   if (evt.target.checked) {
     if (evt.target.value === 'none') {
@@ -123,7 +123,7 @@ function onChangeEffect (evt) {
 }
 
 
-function addOnChangeEffects () {
+const addOnChangeEffects = () => {
   effectsRadio.forEach((element) => {
     element.addEventListener('change', onChangeEffect);
   });

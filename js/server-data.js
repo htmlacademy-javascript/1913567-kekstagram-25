@@ -1,5 +1,5 @@
 import {showAlert} from './util.js';
-function getData (onSuccess) {
+const getData = (onSuccess) => {
   return fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
     .then((posts) => {
@@ -11,7 +11,7 @@ function getData (onSuccess) {
     });
 }
 
-function sendData (onSuccess, onFail, body) {
+const sendData = (onSuccess, onFail, body) => {
   fetch(
     'https://25.javascript.pages.academy/kekstagram',
     {

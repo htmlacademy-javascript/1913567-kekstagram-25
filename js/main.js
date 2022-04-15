@@ -9,7 +9,7 @@ import { getFragmentPictures } from './create-miniature.js';
 function init () {
   getData(getFragmentPictures)
     .then((posts) => {
-      filters(posts);
+      filters (posts);
       getRandomArray (posts);
     });
 }

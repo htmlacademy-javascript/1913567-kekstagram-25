@@ -1,5 +1,4 @@
-
-function getRandomInt (from, to) {
+const getRandomInt = (from, to) => {
   from = Math.ceil(from);
   to = Math.floor(to);
   if (from <0 || to <0) {
@@ -15,21 +14,21 @@ function getRandomInt (from, to) {
 
 getRandomInt();
 
-function compareStringLength (string, length) {
+const compareStringLength = (string, length) => {
   return string.length <= length;
 }
 
-function isEscapeKey (evt) {
+const isEscapeKey = (evt) => {
   return evt.key === 'Escape';
 }
 
-function isEnterKey (evt) {
+const isEnterKey = (evt) => {
   return evt.key === 'Enter';
 }
 
 const ALERT_SHOW_TIME = 5000;
 
-function showAlert (message) {
+const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -50,7 +49,7 @@ function showAlert (message) {
   }, ALERT_SHOW_TIME);
 }
 
-function debounce (callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;

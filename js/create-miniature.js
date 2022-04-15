@@ -5,7 +5,7 @@ const picturesBlock = document.querySelector('.pictures');
 
 const fragment = document.createDocumentFragment();
 
-function getFragmentPictures (arrayObject) {
+const getFragmentPictures = (arrayObject) => {
   arrayObject.forEach(({url, likes, comments}) => {
     const addMiniature = miniature.cloneNode(true);
     const photo = addMiniature.querySelector('img');

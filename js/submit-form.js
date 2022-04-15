@@ -36,7 +36,7 @@ uploadInput.addEventListener('change', () => {
   inputHashtag.addEventListener('blur', onInputBlur);
 });
 
-function onUploadModalclick () {
+const onUploadModalclick = () => {
   body.classList.remove('modal-open');
   uploadInput.value = '';
   imageEditingForm.classList.add('hidden');
@@ -50,17 +50,17 @@ function onUploadModalclick () {
   removeOnChangeEffects();
 }
 
-function onInputFocus () {
+const onInputFocus = () => {
   document.removeEventListener('keydown', onEscPress);
 }
-function onInputBlur() {
+const onInputBlur = () => {
   document.addEventListener('keydown', onEscPress);
 }
 
 const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
 
 
-function onChangeInputHashtag () {
+const onChangeInputHashtag = () =>  {
   const hashtagArray = inputHashtag.value.split(' ');
   let isTrue = false;
   const labelHashtag = document.querySelector('.form-group');
@@ -88,7 +88,7 @@ Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШ
 
 const pristine = new Pristine(form);
 
-function valid (onSuccess) {
+const valid = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -112,7 +112,7 @@ const successButton = succesBlockMessage.querySelector('button');
 succesBlockMessage.classList.add('hidden');
 body.append(succesBlockMessage);
 
-function showSuccessMessage () {
+const showSuccessMessage = () =>  {
   onUploadModalclick();
   succesBlockMessage.classList.remove('hidden');
   document.addEventListener('click', onOutsiteClick);
@@ -127,7 +127,7 @@ const errorButton = errorBlockMessage.querySelector('button');
 errorBlockMessage.classList.add('hidden');
 body.append(errorBlockMessage);
 
-function onCloseMessageClick() {
+const onCloseMessageClick = () =>  {
   succesBlockMessage.classList.add('hidden');
   errorBlockMessage.classList.add('hidden');
   document.removeEventListener('keyup', onEscPress);
@@ -136,7 +136,7 @@ function onCloseMessageClick() {
   document.removeEventListener('click', onOutsiteClick);
 }
 
-function showErrorMessage () {
+const showErrorMessage = () =>  {
   onUploadModalclick();
   errorBlockMessage.classList.remove('hidden');
   succesBlockMessage.classList.add('hidden');
@@ -145,7 +145,7 @@ function showErrorMessage () {
   document.addEventListener('click', onOutsiteClick);
 }
 
-function onEscPress(evt) {
+const onEscPress = (evt) => {
   if (isEscapeKey(evt) && !imageEditingForm.classList.contains('hidden')) {
     onUploadModalclick(evt);
   }
@@ -154,7 +154,7 @@ function onEscPress(evt) {
   }
 }
 
-function onOutsiteClick (evt) {
+const onOutsiteClick = (evt) => {
   evt.preventDefault();
   const divSuccess = document.querySelector('.success__inner');
   const divError = document.querySelector('.error__inner');
