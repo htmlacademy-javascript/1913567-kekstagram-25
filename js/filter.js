@@ -10,6 +10,64 @@ const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
 const discusedFilterButton = document.querySelector('#filter-discussed');
 
+const clickButton = (evt) => {
+  evt.preventDefault();
+  filtersButton.forEach((element) => {
+    element.classList.remove('img-filters__button--active');
+  });
+
+  evt.target.classList.add('img-filters__button--active');
+  const postsElement = picturesBlock.querySelectorAll('.picture');
+  const postArray = Array.from(postsElement);
+  postArray.forEach((element) => {
+    element.remove();
+  });
+};
+
+const onDefaultButton = (cb) => {
+  defaultFilterButton.addEventListener('click', (evt) => {
+    clickButton(evt);
+    cb();
+  });
+};
+
+const onRandomButton = (cb) => {
+
+  randomFilterButton.addEventListener('click', (evt) => {
+    clickButton(evt);
+    cb();
+
+  });
+};
+
+const onDiscusedButton = (cb) => {
+  discusedFilterButton.addEventListener('click', (evt) => {
+    clickButton(evt);
+    cb();
+  });
+};
+
+const getRandomArray = (posts) => {
+  const randomArray = [];
+  posts.some((post) => {
+    if (getRandomInt(0, 1)) {
+      randomArray.push(post);
+    }
+
+    if (randomArray.length === COUNT_SHOW_PHOTO) {
+      return true;
+    }
+  });
+  return randomArray;
+};
+
+const compareCountComments = (commentA, commentB) => {
+  const countCommentA = commentA.comments.length;
+  const countCommentB = commentB.comments.length;
+
+  return countCommentB - countCommentA;
+};
+
 const filters = (posts) => {
   const blockFilters = document.querySelector('.img-filters');
   blockFilters.classList.remove('img-filters--inactive');
@@ -33,65 +91,6 @@ const filters = (posts) => {
   ));
 
 
-}
-
-const clickButton = (evt) => {
-  evt.preventDefault();
-  filtersButton.forEach((element) => {
-    element.classList.remove('img-filters__button--active');
-  });
-
-  evt.target.classList.add('img-filters__button--active');
-  const postsElement = picturesBlock.querySelectorAll('.picture');
-  const postArray = Array.from(postsElement);
-  postArray.forEach((element) => {
-    element.remove();
-  });
-}
-
-const onDefaultButton = (cb) => {
-  defaultFilterButton.addEventListener('click', (evt) => {
-    clickButton(evt);
-    cb();
-  });
-}
-
-const onRandomButton = (cb) => {
-
-  randomFilterButton.addEventListener('click', (evt) => {
-    clickButton(evt);
-    cb();
-
-  });
-}
-
-const onDiscusedButton = (cb) => {
-  discusedFilterButton.addEventListener('click', (evt) => {
-    clickButton(evt);
-    cb();
-  });
-}
-
-const getRandomArray = (posts) => {
-  const randomArray = [];
-  posts.some((post) => {
-    if (getRandomInt(0, 1)) {
-      randomArray.push(post);
-    }
-
-    if (randomArray.length === COUNT_SHOW_PHOTO) {
-      return true;
-    }
-  });
-  return randomArray;
-}
-
-const compareCountComments = (commentA, commentB) => {
-  const countCommentA = commentA.comments.length;
-  const countCommentB = commentB.comments.length;
-
-  return countCommentB - countCommentA;
-}
-
+};
 
 export {filters, getRandomArray};

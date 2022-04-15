@@ -21,7 +21,7 @@ const getFragmentPictures = (arrayObject) => {
   });
   picturesBlock.append(fragment);
   openModal(arrayObject);
-}
+};
 
 
 export {getFragmentPictures, picturesBlock};

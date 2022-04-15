@@ -21,17 +21,17 @@ const onButtonScaleClick = (evt) => {
   }
   scaleImage.style.transform = `scale(${scaleValue/100})`;
   scaleControl.value = `${scaleValue}%`;
-}
+};
 
 
 const addOnScaleButton = () => {
   scaleBiggerButton.addEventListener('click', onButtonScaleClick);
   scaleSmallerButton.addEventListener('click', onButtonScaleClick);
-}
+};
 
 const removeOnScaleButton = () => {
   scaleBiggerButton.removeEventListener('click', onButtonScaleClick);
   scaleSmallerButton.removeEventListener('click', onButtonScaleClick);
-}
+};
 
 export {addOnScaleButton, removeOnScaleButton};

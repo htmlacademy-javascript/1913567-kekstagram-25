@@ -1,15 +1,13 @@
 import {showAlert} from './util.js';
-const getData = (onSuccess) => {
-  return fetch('https://25.javascript.pages.academy/kekstagram/data')
-    .then((response) => response.json())
-    .then((posts) => {
-      onSuccess(posts);
-      return posts;
-    })
-    .catch(() => {
-      showAlert('Ошибка загрузки данных');
-    });
-}
+const getData = (onSuccess) => fetch('https://25.javascript.pages.academy/kekstagram/data')
+  .then((response) => response.json())
+  .then((posts) => {
+    onSuccess(posts);
+    return posts;
+  })
+  .catch(() => {
+    showAlert('Ошибка загрузки данных');
+  });
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
@@ -29,6 +27,6 @@ const sendData = (onSuccess, onFail, body) => {
     .catch(() => {
       onFail();
     });
-}
+};
 
 export {getData, sendData};

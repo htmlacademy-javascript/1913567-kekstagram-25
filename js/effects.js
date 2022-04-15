@@ -120,7 +120,7 @@ const onChangeEffect = (evt) => {
     });
 
   }
-}
+};
 
 
 const addOnChangeEffects = () => {
@@ -137,15 +137,15 @@ const addOnChangeEffects = () => {
     connect: 'lower',
   });
   sliderElement.classList.add('hidden');
-}
+};
 
-function removeOnChangeEffects () {
+const removeOnChangeEffects = () => {
   effectsRadio.forEach((element) => {
     element.removeEventListener('change', onChangeEffect);
   });
   effectsRadio[0].checked = true;
   effectImage.style.filter = 'none';
   sliderElement.noUiSlider.destroy();
-}
+};
 
 export {addOnChangeEffects, removeOnChangeEffects};

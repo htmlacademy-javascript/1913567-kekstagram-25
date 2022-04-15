@@ -10,21 +10,15 @@ const getRandomInt = (from, to) => {
     to = memory;
   }
   return Math.floor(Math.random() * (to - from + 1) + from);
-}
+};
 
 getRandomInt();
 
-const compareStringLength = (string, length) => {
-  return string.length <= length;
-}
+const compareStringLength = (string, length) => string.length <= length;
 
-const isEscapeKey = (evt) => {
-  return evt.key === 'Escape';
-}
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const isEnterKey = (evt) => {
-  return evt.key === 'Enter';
-}
+const isEnterKey = (evt) => evt.key === 'Enter';
 
 const ALERT_SHOW_TIME = 5000;
 
@@ -47,7 +41,7 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 const debounce = (callback, timeoutDelay) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
@@ -65,6 +59,6 @@ const debounce = (callback, timeoutDelay) => {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
+};
 
 export {getRandomInt, compareStringLength, isEnterKey, isEscapeKey, showAlert, debounce};
