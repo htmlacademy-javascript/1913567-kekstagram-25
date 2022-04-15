@@ -108,7 +108,6 @@ uploadInput.addEventListener('change', () => {
 
 const regular = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
 
-
 const onChangeInputHashtag = () =>  {
   const hashtagArray = inputHashtag.value.split(' ');
   let isTrue = false;
@@ -136,7 +135,6 @@ const onChangeInputHashtag = () =>  {
 Pristine.addValidator('my-hashtag', onChangeInputHashtag, 'Пример: #ХэШTaG123; Не больше 5 различных хештегов', 2, false);
 
 const pristine = new Pristine(form);
-
 
 const valid = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
@@ -168,3 +166,4 @@ function onOutsiteClick (evt) {
     onCloseMessageClick();
   }
 }
+
