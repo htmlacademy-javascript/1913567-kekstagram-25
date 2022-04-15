@@ -1,5 +1,4 @@
-
-function getRandomInt (from, to) {
+const getRandomInt = (from, to) => {
   from = Math.ceil(from);
   to = Math.floor(to);
   if (from <0 || to <0) {
@@ -11,25 +10,19 @@ function getRandomInt (from, to) {
     to = memory;
   }
   return Math.floor(Math.random() * (to - from + 1) + from);
-}
+};
 
 getRandomInt();
 
-function compareStringLength (string, length) {
-  return string.length <= length;
-}
+const compareStringLength = (string, length) => string.length <= length;
 
-function isEscapeKey (evt) {
-  return evt.key === 'Escape';
-}
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function isEnterKey (evt) {
-  return evt.key === 'Enter';
-}
+const isEnterKey = (evt) => evt.key === 'Enter';
 
 const ALERT_SHOW_TIME = 5000;
 
-function showAlert (message) {
+const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -48,9 +41,9 @@ function showAlert (message) {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
-function debounce (callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -66,6 +59,6 @@ function debounce (callback, timeoutDelay) {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
+};
 
 export {getRandomInt, compareStringLength, isEnterKey, isEscapeKey, showAlert, debounce};

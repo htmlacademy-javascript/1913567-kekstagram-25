@@ -6,12 +6,12 @@ import {filters, getRandomArray} from'./filter.js';
 import { getData } from './server-data.js';
 import { getFragmentPictures } from './create-miniature.js';
 
-function init () {
+const init = () => {
   getData(getFragmentPictures)
     .then((posts) => {
-      filters(posts);
+      filters (posts);
       getRandomArray (posts);
     });
-}
+};
 
 init();

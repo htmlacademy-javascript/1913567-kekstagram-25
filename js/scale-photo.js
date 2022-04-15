@@ -10,7 +10,7 @@ let scaleValue = 100;
 scaleControl.value = `${scaleValue}%`;
 scaleImage.style.transform = `scale(${scaleValue/100})`;
 
-function onButtonScaleClick (evt) {
+const onButtonScaleClick = (evt) => {
   evt.preventDefault();
   const scaleButton = evt.target;
   if (scaleButton === scaleBiggerButton && scaleValue >= MIN_SCALE && scaleValue < MAX_SCALE) {
@@ -21,17 +21,17 @@ function onButtonScaleClick (evt) {
   }
   scaleImage.style.transform = `scale(${scaleValue/100})`;
   scaleControl.value = `${scaleValue}%`;
-}
+};
 
 
-function addOnScaleButton () {
+const addOnScaleButton = () => {
   scaleBiggerButton.addEventListener('click', onButtonScaleClick);
   scaleSmallerButton.addEventListener('click', onButtonScaleClick);
-}
+};
 
-function removeOnScaleButton() {
+const removeOnScaleButton = () => {
   scaleBiggerButton.removeEventListener('click', onButtonScaleClick);
   scaleSmallerButton.removeEventListener('click', onButtonScaleClick);
-}
+};
 
 export {addOnScaleButton, removeOnScaleButton};
